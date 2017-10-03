@@ -16,7 +16,7 @@ import {
 	slice,
 	uniq
 } from 'lodash';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 /**
  * Internal dependencies

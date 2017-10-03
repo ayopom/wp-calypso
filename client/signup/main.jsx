@@ -6,7 +6,7 @@ import url from 'url';
 import debugModule from 'debug';
 import page from 'page';
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { assign, defer, delay, filter, find, indexOf, last, matchesProperty, pick, some, startsWith } from 'lodash';
 import { connect } from 'react-redux';
 import { setSurvey } from 'state/signup/steps/survey/actions';
