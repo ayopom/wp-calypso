@@ -4,7 +4,7 @@
 import { find, groupBy, isEmpty, map, mapValues } from 'lodash';
 const PropTypes = require( 'prop-types' );
 const React = require( 'react' ),
-	update = require( 'react-addons-update' ),
+	update = require( 'immutability-helper' ),
 	page = require( 'page' );
 
 /**

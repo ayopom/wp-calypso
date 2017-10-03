@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 /**
  * Internal dependencies

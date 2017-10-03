@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 import { every, reject } from 'lodash';
 
 const WPCOM_DEFAULTS = [

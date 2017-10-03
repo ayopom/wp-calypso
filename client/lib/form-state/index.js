@@ -18,7 +18,7 @@ import {
 	some,
 	uniqueId
 } from 'lodash';
-const update = require( 'react-addons-update' );
+const update = require( 'immutability-helper' );
 
 function Controller( options ) {
 	var debounceWait;
