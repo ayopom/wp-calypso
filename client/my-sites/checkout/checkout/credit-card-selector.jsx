@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var React = require( 'react' ),
 	classNames = require( 'classnames' );
 import { find } from 'lodash';
@@ -14,7 +17,7 @@ var analytics = require( 'lib/analytics' ),
 	storeTransactions = require( 'lib/store-transactions' ),
 	upgradesActions = require( 'lib/upgrades/actions' );
 
-var CreditCardSelector = React.createClass({
+var CreditCardSelector = React.createClass( {
 	getInitialState: function() {
 		if ( this.props.initialCard ) {
 			return { section: this.props.initialCard.stored_details_id };
@@ -44,7 +47,8 @@ var CreditCardSelector = React.createClass({
 			<NewCardForm
 				countriesList={ this.props.countriesList }
 				transaction={ this.props.transaction }
-				hasStoredCards={ this.props.cards.length > 0 } />
+				hasStoredCards={ this.props.cards.length > 0 }
+			/>
 		);
 
 		return this.section( 'new-card', cardForm );
@@ -52,17 +56,17 @@ var CreditCardSelector = React.createClass({
 
 	section: function( name, content ) {
 		var classes = classNames( 'payment-box-section', {
-			'selected': this.state.section === name,
-			'no-stored-cards': name === 'new-card' && this.props.cards.length === 0
+			selected: this.state.section === name,
+			'no-stored-cards': name === 'new-card' && this.props.cards.length === 0,
 		} );
 
 		return (
-			<div className={ classes }
-					onClick={ this.handleClickedSection.bind( this, name ) }
-					key={ name }>
-				<div className="payment-box-section-inner">
-					{ content }
-				</div>
+			<div
+				className={ classes }
+				onClick={ this.handleClickedSection.bind( this, name ) }
+				key={ name }
+			>
+				<div className="payment-box-section-inner">{ content }</div>
 			</div>
 		);
 	},
@@ -87,7 +91,7 @@ var CreditCardSelector = React.createClass({
 
 	getStoredCardDetails: function( section ) {
 		return find( this.props.cards, { stored_details_id: section } );
-	}
+	},
 } );
 
 module.exports = CreditCardSelector;

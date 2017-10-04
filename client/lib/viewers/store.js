@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { assign, values } from 'lodash';
 const debug = require( 'debug' )( 'calypso:viewers:store' );
 
@@ -24,7 +27,7 @@ var ViewersStore = {
 			totalViewers: _totalViewers[ siteId ] || 0,
 			fetchingViewers: _fetchingViewers[ siteId ],
 			currentViewersPage: _viewersCurrentPage[ siteId ],
-			numViewersFetched: _numViewersFetched[ siteId ]
+			numViewersFetched: _numViewersFetched[ siteId ],
 		};
 	},
 
@@ -42,7 +45,7 @@ var ViewersStore = {
 
 	emitChange: function() {
 		this.emit( 'change' );
-	}
+	},
 };
 
 function updateViewer( siteId, id, viewer ) {

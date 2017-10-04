@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { isEqual } from 'lodash';
 var debug = require( 'debug' )( 'calypso:infinite-list:positions-store' ),
 	Dispatcher = require( 'dispatcher' );
@@ -18,7 +21,7 @@ var _infiniteListPositions = {},
 		get: function( url ) {
 			debug( 'positions-store:get(): ', url, _infiniteListPositions );
 			return _infiniteListPositions[ url ];
-		}
+		},
 	};
 
 emitter( InfiniteListPositionsStore );

@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -25,7 +28,7 @@ class DesignTypeWithStoreStep extends Component {
 		super( props );
 
 		this.state = {
-			showStore: false
+			showStore: false,
 		};
 
 		this.setPressableStore = this.setPressableStore.bind( this );
@@ -43,22 +46,30 @@ class DesignTypeWithStoreStep extends Component {
 		const storeText = translate( 'To sell your products or services and accept payments.' );
 
 		return [
-			{ type: 'blog',
+			{
+				type: 'blog',
 				label: translate( 'Start with a blog' ),
 				description: blogText,
-				image: <BlogImage /> },
-			{ type: 'page',
+				image: <BlogImage />,
+			},
+			{
+				type: 'page',
 				label: translate( 'Start with a website' ),
 				description: siteText,
-				image: <PageImage /> },
-			{ type: 'grid',
+				image: <PageImage />,
+			},
+			{
+				type: 'grid',
 				label: translate( 'Start with a portfolio' ),
 				description: gridText,
-				image: <GridImage /> },
-			{ type: 'store',
+				image: <GridImage />,
+			},
+			{
+				type: 'store',
 				label: translate( 'Start with an online store' ),
 				description: storeText,
-				image: <StoreImage /> },
+				image: <StoreImage />,
+			},
 		];
 	}
 
@@ -70,10 +81,7 @@ class DesignTypeWithStoreStep extends Component {
 	}
 
 	handleStoreBackClick = () => {
-		this.setState(
-			{ showStore: false },
-			this.scrollUp
-		);
+		this.setState( { showStore: false }, this.scrollUp );
 	};
 
 	handleChoiceClick = type => event => {
@@ -82,7 +90,7 @@ class DesignTypeWithStoreStep extends Component {
 		this.handleNextStep( type );
 	};
 
-	handleNextStep = ( designType ) => {
+	handleNextStep = designType => {
 		this.props.setDesignType( designType );
 
 		this.props.recordTracksEvent( 'calypso_triforce_select_design', { category: designType } );
@@ -91,7 +99,7 @@ class DesignTypeWithStoreStep extends Component {
 			this.scrollUp();
 
 			this.setState( {
-				showStore: true
+				showStore: true,
 			} );
 
 			invoke( this, 'pressableStore.focus' );
@@ -104,22 +112,18 @@ class DesignTypeWithStoreStep extends Component {
 		this.props.goToNextStep();
 	};
 
-	renderChoice = ( choice ) => {
+	renderChoice = choice => {
 		return (
 			<Card className="design-type-with-store__choice" key={ choice.type }>
-				<a className="design-type-with-store__choice-link"
+				<a
+					className="design-type-with-store__choice-link"
 					href="#"
-					onClick={ this.handleChoiceClick( choice.type ) }>
-					<div className="design-type-with-store__image">
-						{ choice.image }
-					</div>
+					onClick={ this.handleChoiceClick( choice.type ) }
+				>
+					<div className="design-type-with-store__image">{ choice.image }</div>
 					<div className="design-type-with-store__choice-copy">
-						<span className="button is-compact design-type-with-store__cta">
-							{choice.label}
-						</span>
-						<p className="design-type-with-store__choice-description">
-							{ choice.description }
-						</p>
+						<span className="button is-compact design-type-with-store__cta">{ choice.label }</span>
+						<p className="design-type-with-store__choice-description">{ choice.description }</p>
 					</div>
 				</a>
 			</Card>
@@ -128,23 +132,23 @@ class DesignTypeWithStoreStep extends Component {
 
 	renderChoices() {
 		const { translate } = this.props;
-		const disclaimerText = translate( 'Not sure? Pick the closest option. You can always change your settings later.' ); // eslint-disable-line max-len
+		const disclaimerText = translate(
+			'Not sure? Pick the closest option. You can always change your settings later.'
+		); // eslint-disable-line max-len
 
-		const storeWrapperClassName = classNames(
-			'design-type-with-store__store-wrapper',
-			{ 'is-hidden': ! this.state.showStore }
-		);
+		const storeWrapperClassName = classNames( 'design-type-with-store__store-wrapper', {
+			'is-hidden': ! this.state.showStore,
+		} );
 
-		const designTypeListClassName = classNames(
-			'design-type-with-store__list',
-			{ 'is-hidden': this.state.showStore }
-		);
+		const designTypeListClassName = classNames( 'design-type-with-store__list', {
+			'is-hidden': this.state.showStore,
+		} );
 
 		return (
 			<div className="design-type-with-store__substep-wrapper">
 				<div className={ storeWrapperClassName }>
 					<PressableStoreStep
-						{ ... this.props }
+						{ ...this.props }
 						onBackClick={ this.handleStoreBackClick }
 						setRef={ this.setPressableStore }
 					/>
@@ -152,9 +156,7 @@ class DesignTypeWithStoreStep extends Component {
 				<div className={ designTypeListClassName }>
 					{ this.getChoices().map( this.renderChoice ) }
 
-					<p className="design-type-with-store__disclaimer">
-						{ disclaimerText }
-					</p>
+					<p className="design-type-with-store__disclaimer">{ disclaimerText }</p>
 				</div>
 			</div>
 		);
@@ -172,7 +174,7 @@ class DesignTypeWithStoreStep extends Component {
 		}
 
 		if ( abtest( 'signupSurveyStep' ) === 'showSurveyStep' ) {
-			return 'We\'re excited to hear more about your project.';
+			return "We're excited to hear more about your project.";
 		}
 
 		return translate( 'Hello! Let’s create your new site.' );
@@ -203,15 +205,13 @@ class DesignTypeWithStoreStep extends Component {
 				subHeaderText={ subHeaderText }
 				signupProgress={ this.props.signupProgress }
 				stepContent={ this.renderChoices() }
-				shouldHideNavButtons={ this.state.showStore } />
+				shouldHideNavButtons={ this.state.showStore }
+			/>
 		);
 	}
 }
 
-export default connect(
-	null,
-	{
-		recordTracksEvent,
-		setDesignType,
-	}
-)( localize( DesignTypeWithStoreStep ) );
+export default connect( null, {
+	recordTracksEvent,
+	setDesignType,
+} )( localize( DesignTypeWithStoreStep ) );

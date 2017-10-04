@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { forOwn } from 'lodash';
 var store = require( 'store' ),
 	wpcom = require( 'lib/wp' ).undocumented();
@@ -43,27 +46,32 @@ PreferencesActions.fetch = function() {
 	}
 
 	Dispatcher.handleViewAction( {
-		type: 'FETCH_ME_SETTINGS'
+		type: 'FETCH_ME_SETTINGS',
 	} );
 
 	if ( localStorage ) {
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_ME_SETTINGS',
-			data: { [ PreferencesConstants.USER_SETTING_KEY ]: localStorage }
+			data: { [ PreferencesConstants.USER_SETTING_KEY ]: localStorage },
 		} );
 	}
 
-	wpcom.me().settings().get( function( error, data ) {
-		if ( ! error && data ) {
-			PreferencesActions.mergePreferencesToLocalStorage( data[ PreferencesConstants.USER_SETTING_KEY ] );
-		}
+	wpcom
+		.me()
+		.settings()
+		.get( function( error, data ) {
+			if ( ! error && data ) {
+				PreferencesActions.mergePreferencesToLocalStorage(
+					data[ PreferencesConstants.USER_SETTING_KEY ]
+				);
+			}
 
-		Dispatcher.handleServerAction( {
-			type: 'RECEIVE_ME_SETTINGS',
-			error: error,
-			data: data
+			Dispatcher.handleServerAction( {
+				type: 'RECEIVE_ME_SETTINGS',
+				error: error,
+				data: data,
+			} );
 		} );
-	} );
 };
 
 PreferencesActions.set = function( key, value ) {
@@ -75,23 +83,26 @@ PreferencesActions.set = function( key, value ) {
 
 	Dispatcher.handleViewAction( {
 		type: 'UPDATE_ME_SETTINGS',
-		data: settings
+		data: settings,
 	} );
 
 	PreferencesActions.mergePreferencesToLocalStorage( preferences );
 
 	_pendingUpdates++;
-	wpcom.me().settings().update( JSON.stringify( settings ), function( error, data ) {
-		if ( --_pendingUpdates ) {
-			return;
-		}
+	wpcom
+		.me()
+		.settings()
+		.update( JSON.stringify( settings ), function( error, data ) {
+			if ( --_pendingUpdates ) {
+				return;
+			}
 
-		Dispatcher.handleServerAction( {
-			type: 'RECEIVE_ME_SETTINGS',
-			error: error,
-			data: data
+			Dispatcher.handleServerAction( {
+				type: 'RECEIVE_ME_SETTINGS',
+				error: error,
+				data: data,
+			} );
 		} );
-	} );
 };
 
 PreferencesActions.remove = function( key ) {

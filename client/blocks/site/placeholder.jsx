@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var React = require( 'react' ),
 	debug = require( 'debug' )( 'calypso:my-sites:site' );
 
@@ -23,5 +26,5 @@ module.exports = React.createClass( {
 				</div>
 			</div>
 		);
-	}
+	},
 } );

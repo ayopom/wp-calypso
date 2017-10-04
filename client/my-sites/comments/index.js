@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import page from 'page';
 
 /**
@@ -16,13 +19,10 @@ export default function() {
 	}
 
 	if ( config.isEnabled( 'comments/management' ) ) {
-		page( '/comments/:status?',
-			controller.siteSelection,
-			redirect,
-			controller.sites
-		);
+		page( '/comments/:status?', controller.siteSelection, redirect, controller.sites );
 
-		page( '/comments/:status/:site',
+		page(
+			'/comments/:status/:site',
 			controller.siteSelection,
 			redirect,
 			controller.navigation,

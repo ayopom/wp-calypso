@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var debug = require( 'debug' )( 'calypso:like-store:actions' ); //eslint-disable-line no-unused-vars
 
 /**
@@ -30,7 +33,6 @@ function getQuery() {
 }
 
 var LikeActions = {
-
 	/**
 	* Fetch a post's list of likes
 	*
@@ -51,7 +53,10 @@ var LikeActions = {
 				LikeActions.receivePostLikes( error, siteId, postId, data );
 			} );
 
-		wpcom.site( siteId ).post( postId ).likesList( callback );
+		wpcom
+			.site( siteId )
+			.post( postId )
+			.likesList( callback );
 	},
 
 	/**
@@ -64,12 +69,16 @@ var LikeActions = {
 		Dispatcher.handleViewAction( {
 			type: 'LIKE_POST',
 			siteId: siteId,
-			postId: postId
+			postId: postId,
 		} );
 
-		wpcom.site( siteId ).post( postId ).like().add( getQuery(), function( error, data ) {
-			LikeActions.receiveLikeResponse( error, siteId, postId, data );
-		} );
+		wpcom
+			.site( siteId )
+			.post( postId )
+			.like()
+			.add( getQuery(), function( error, data ) {
+				LikeActions.receiveLikeResponse( error, siteId, postId, data );
+			} );
 	},
 
 	/**
@@ -81,12 +90,16 @@ var LikeActions = {
 		Dispatcher.handleViewAction( {
 			type: 'UNLIKE_POST',
 			siteId: siteId,
-			postId: postId
+			postId: postId,
 		} );
 
-		wpcom.site( siteId ).post( postId ).like().del( getQuery(), function( error, data ) {
-			LikeActions.receiveUnlikeResponse( error, siteId, postId, data );
-		} );
+		wpcom
+			.site( siteId )
+			.post( postId )
+			.like()
+			.del( getQuery(), function( error, data ) {
+				LikeActions.receiveUnlikeResponse( error, siteId, postId, data );
+			} );
 	},
 
 	receivePostLikes: function( error, siteId, postId, data ) {
@@ -95,7 +108,7 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
 	},
 
@@ -105,7 +118,7 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
 	},
 
@@ -116,9 +129,9 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
-	}
+	},
 };
 
 module.exports = LikeActions;

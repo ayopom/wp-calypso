@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { assign } from 'lodash';
 const React = require( 'react' );
 

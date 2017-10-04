@@ -1,6 +1,9 @@
 /**
  * Internal dependencies
+ *
+ * @format
  */
+
 import { bypassDataLayer } from './utils';
 import { mergeHandlers } from 'state/action-watchers/utils';
 
@@ -13,7 +16,7 @@ const mergedHandlers = mergeHandlers(
 	httpHandlers,
 	wpcomHttpHandlers,
 	thirdPartyHandlers,
-	wpcomHandlers,
+	wpcomHandlers
 );
 
 const shouldNext = action => {

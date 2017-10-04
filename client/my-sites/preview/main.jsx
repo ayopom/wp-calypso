@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 import { debounce } from 'lodash';
@@ -10,10 +13,7 @@ import debugFactory from 'debug';
 /**
  * Internal dependencies
  */
-import {
-	getSelectedSite,
-	getSelectedSiteId,
-} from 'state/ui/selectors';
+import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
 import { isSitePreviewable } from 'state/sites/selectors';
 import addQueryArgs from 'lib/route/add-query-args';
 import { setLayoutFocus } from 'state/ui/layout-focus/actions';
@@ -29,7 +29,6 @@ import WebPreviewContent from 'components/web-preview/content';
 const debug = debugFactory( 'calypso:my-sites:preview' );
 
 class PreviewMain extends React.Component {
-
 	static displayName = 'Preview';
 
 	state = {
@@ -47,7 +46,7 @@ class PreviewMain extends React.Component {
 		this.setState( {
 			showingClose: isWithinBreakpoint( '<660px' ),
 		} );
-	}
+	};
 
 	debouncedUpdateLayout = debounce( this.updateLayout, 50 );
 
@@ -72,11 +71,14 @@ class PreviewMain extends React.Component {
 		}
 
 		const baseUrl = this.getBasePreviewUrl();
-		const newUrl = addQueryArgs( {
-			theme_preview: true,
-			iframe: true,
-			'frame-nonce': this.props.site.options.frame_nonce
-		}, baseUrl );
+		const newUrl = addQueryArgs(
+			{
+				theme_preview: true,
+				iframe: true,
+				'frame-nonce': this.props.site.options.frame_nonce,
+			},
+			baseUrl
+		);
 
 		if ( this.iframeUrl !== newUrl ) {
 			debug( 'loading', newUrl );
@@ -98,15 +100,15 @@ class PreviewMain extends React.Component {
 		}
 	}
 
-	updateSiteLocation = ( pathname ) => {
+	updateSiteLocation = pathname => {
 		this.setState( {
-			externalUrl: this.props.site.URL + ( pathname === '/' ? '' : pathname )
+			externalUrl: this.props.site.URL + ( pathname === '/' ? '' : pathname ),
 		} );
-	}
+	};
 
 	focusSidebar = () => {
 		this.props.setLayoutFocus( 'sidebar' );
-	}
+	};
 
 	render() {
 		const { translate, isPreviewable, site } = this.props;
@@ -119,9 +121,7 @@ class PreviewMain extends React.Component {
 		if ( ! isPreviewable ) {
 			const action = (
 				<Button primary icon href={ site.URL } target="_blank">
-					{ translate( 'Open' ) }
-					{ ' ' }
-					<Gridicon icon="external" />
+					{ translate( 'Open' ) } <Gridicon icon="external" />
 				</Button>
 			);
 
@@ -146,18 +146,17 @@ class PreviewMain extends React.Component {
 					onClose={ this.focusSidebar }
 					previewUrl={ this.state.previewUrl }
 					externalUrl={ this.state.externalUrl }
-					loadingMessage={
-						this.props.translate( '{{strong}}One moment, please…{{/strong}} loading your site.',
-							{ components: { strong: <strong /> } }
-						)
-					}
+					loadingMessage={ this.props.translate(
+						'{{strong}}One moment, please…{{/strong}} loading your site.',
+						{ components: { strong: <strong /> } }
+					) }
 				/>
 			</Main>
 		);
 	}
 }
 
-const mapState = ( state ) => {
+const mapState = state => {
 	const selectedSiteId = getSelectedSiteId( state );
 	return {
 		isPreviewable: isSitePreviewable( state, selectedSiteId ),

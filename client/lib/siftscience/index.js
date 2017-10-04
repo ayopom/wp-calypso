@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var debug = require( 'debug' )( 'calypso:siftscience' );
 
 /**
@@ -35,5 +38,5 @@ module.exports = {
 				}
 			} );
 		}
-	}
+	},
 };

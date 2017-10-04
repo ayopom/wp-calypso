@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var debug = require( 'debug' )( 'calypso:searchable' );
 
 /**
@@ -9,7 +12,6 @@ var debug = require( 'debug' )( 'calypso:searchable' );
  * @param {array} searchNodes Parameter to specify which nodes of each collection item to search
  */
 function Searchable( prototype, searchNodes ) {
-
 	debug( 'Adding searchable mixin to:', prototype );
 
 	/**
@@ -24,7 +26,6 @@ function Searchable( prototype, searchNodes ) {
 	 * @return {boolean} True for a match, false for no match
 	 */
 	var findMatches = function( node, object, keyword ) {
-
 		var i, key;
 
 		if ( Array.isArray( node ) ) {
@@ -34,11 +35,9 @@ function Searchable( prototype, searchNodes ) {
 					return true;
 				}
 			}
-
 		} else if ( 'string' === typeof node ) {
 			// string -- return true|false on search term
-			return ( -1 !== object[ node ].toLowerCase().indexOf( keyword ) );
-
+			return -1 !== object[ node ].toLowerCase().indexOf( keyword );
 		} else {
 			// object -- walk the deeper node
 			for ( key in node ) {
@@ -60,7 +59,6 @@ function Searchable( prototype, searchNodes ) {
 	 * @return {array} The filtered set of items in the collection that match the search term
 	 */
 	prototype.search = function( keyword ) {
-
 		debug( 'Searching for "' + keyword + '" in ', prototype );
 
 		var allItems = this.get(),
@@ -71,9 +69,7 @@ function Searchable( prototype, searchNodes ) {
 		} );
 
 		return filteredItems;
-
 	};
-
 }
 
 /**

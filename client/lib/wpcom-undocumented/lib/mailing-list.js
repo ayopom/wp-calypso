@@ -1,6 +1,9 @@
 /**
  * Module dependencies.
+ *
+ * @format
  */
+
 var debug = require( 'debug' )( 'calypso:wpcom-undocumented:mailing-list' );
 
 /**
@@ -12,7 +15,7 @@ var debug = require( 'debug' )( 'calypso:wpcom-undocumented:mailing-list' );
  */
 
 function MailingList( category, wpcom ) {
-	if ( !( this instanceof MailingList ) ) {
+	if ( ! ( this instanceof MailingList ) ) {
 		return new MailingList( category, wpcom );
 	}
 
@@ -93,8 +96,11 @@ MailingList.prototype.unsubscribe = function( emailAddress, hmac, context, callb
 };
 
 function createSubscriberResourceUrl( category, emailAddress, method ) {
-	var url = '/mailing-lists/' + encodeURIComponent( category ) +
-		'/subscribers/' + encodeURIComponent( emailAddress );
+	var url =
+		'/mailing-lists/' +
+		encodeURIComponent( category ) +
+		'/subscribers/' +
+		encodeURIComponent( emailAddress );
 
 	if ( method ) {
 		url += '/' + method;
@@ -106,7 +112,7 @@ function createSubscriberResourceUrl( category, emailAddress, method ) {
 function createRequestBody( hmac, context ) {
 	return JSON.stringify( {
 		hmac: hmac,
-		context: context
+		context: context,
 	} );
 }
 

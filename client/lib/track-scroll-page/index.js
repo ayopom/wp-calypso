@@ -1,6 +1,9 @@
 /**
  * Internal Dependencies
+ *
+ * @format
  */
+
 var analytics = require( 'lib/analytics' );
 
 module.exports = function( path, title, category, page ) {

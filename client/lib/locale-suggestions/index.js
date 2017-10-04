@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var Dispatcher = require( 'dispatcher' );
 
 /**
@@ -22,7 +25,7 @@ var LocaleSuggestionStore = {
 	receiveLocaleSuggestions: function( newLocaleSuggestions ) {
 		localeSuggestions = newLocaleSuggestions;
 		LocaleSuggestionStore.emit( 'change' );
-	}
+	},
 };
 
 Emitter( LocaleSuggestionStore );

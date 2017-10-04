@@ -1,6 +1,9 @@
 /**
  * Internal dependencies
+ *
+ * @format
  */
+
 import { READER_SIDEBAR_LISTS_TOGGLE, READER_SIDEBAR_TAGS_TOGGLE } from 'state/action-types';
 
 const stats = require( 'reader/stats' );
@@ -10,7 +13,7 @@ export function toggleReaderSidebarLists() {
 	stats.recordGaEvent( 'Toggle Lists Menu' );
 	stats.recordTrack( 'calypso_reader_sidebar_list_toggle' );
 	return {
-		type: READER_SIDEBAR_LISTS_TOGGLE
+		type: READER_SIDEBAR_LISTS_TOGGLE,
 	};
 }
 
@@ -19,6 +22,6 @@ export function toggleReaderSidebarTags() {
 	stats.recordGaEvent( 'Toggle Tags Menu' );
 	stats.recordTrack( 'calypso_reader_sidebar_tags_toggle' );
 	return {
-		type: READER_SIDEBAR_TAGS_TOGGLE
+		type: READER_SIDEBAR_TAGS_TOGGLE,
 	};
 }

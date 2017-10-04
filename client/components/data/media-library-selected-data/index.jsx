@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 const React = require( 'react' );
 const PropTypes = require( 'prop-types' );
 
@@ -12,7 +15,7 @@ var MediaLibrarySelectedStore = require( 'lib/media/library-selected-store' ),
 
 function getStateData( siteId ) {
 	return {
-		mediaLibrarySelectedItems: MediaLibrarySelectedStore.getAll( siteId )
+		mediaLibrarySelectedItems: MediaLibrarySelectedStore.getAll( siteId ),
 	};
 }
 
@@ -20,7 +23,7 @@ module.exports = React.createClass( {
 	displayName: 'MediaLibrarySelectedData',
 
 	propTypes: {
-		siteId: PropTypes.number.isRequired
+		siteId: PropTypes.number.isRequired,
 	},
 
 	getInitialState: function() {
@@ -47,5 +50,5 @@ module.exports = React.createClass( {
 
 	render: function() {
 		return passToChildren( this, this.state );
-	}
+	},
 } );

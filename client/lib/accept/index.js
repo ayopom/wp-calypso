@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var ReactDom = require( 'react-dom' ),
 	React = require( 'react' );
 
@@ -31,7 +34,7 @@ module.exports = function( message, callback, confirmButtonText, cancelButtonTex
 			onClose: onClose,
 			confirmButtonText: confirmButtonText,
 			cancelButtonText: cancelButtonText,
-			options
+			options,
 		} ),
 		wrapper
 	);

@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -87,7 +90,7 @@ class PostCommentForm extends React.Component {
 				this.props.deleteComment(
 					this.props.post.site_ID,
 					this.props.post.ID,
-					this.props.placeholderId,
+					this.props.placeholderId
 				);
 			}
 		}
@@ -161,7 +164,7 @@ class PostCommentForm extends React.Component {
 		switch ( error.error ) {
 			case 'comment_duplicate':
 				message = translate(
-					"Duplicate comment detected. It looks like you've already said that!",
+					"Duplicate comment detected. It looks like you've already said that!"
 				);
 				break;
 
@@ -192,11 +195,7 @@ class PostCommentForm extends React.Component {
 		) {
 			// If we already have some comments, show a 'comments closed message'
 			if ( post.discussion.comment_count && post.discussion.comment_count > 0 ) {
-				return (
-					<p className="comments__form-closed">
-						{ translate( 'Comments are closed.' ) }
-					</p>
-				);
+				return <p className="comments__form-closed">{ translate( 'Comments are closed.' ) }</p>;
 			}
 
 			return null;
@@ -221,9 +220,7 @@ class PostCommentForm extends React.Component {
 					<label>
 						<div className={ expandingAreaClasses }>
 							<pre>
-								<span>
-									{ this.state.commentText }
-								</span>
+								<span>{ this.state.commentText }</span>
 								<br />
 							</pre>
 							<AutoDirection>
@@ -278,5 +275,5 @@ export default connect(
 	state => ( {
 		currentUser: getCurrentUser( state ),
 	} ),
-	{ writeComment, deleteComment, replyComment },
+	{ writeComment, deleteComment, replyComment }
 )( PostCommentForm );

@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { assign, forEach } from 'lodash';
 const ReactDom = require( 'react-dom' ),
 	React = require( 'react' ),
@@ -74,7 +77,7 @@ import wpEmojiPlugin from './plugins/wpemoji/plugin';
 	markdownPlugin,
 	wpEmojiPlugin,
 	simplePaymentsPlugin,
-].forEach( ( initializePlugin ) => initializePlugin() );
+].forEach( initializePlugin => initializePlugin() );
 
 /**
  * Internal Dependencies
@@ -109,7 +112,7 @@ const EVENTS = {
 	show: 'onShow',
 	submit: 'onSubmit',
 	undo: 'onUndo',
-	setContent: 'onSetContent'
+	setContent: 'onSetContent',
 };
 
 const PLUGINS = [
@@ -192,7 +195,7 @@ module.exports = React.createClass( {
 	getDefaultProps: function() {
 		return {
 			mode: 'tinymce',
-			isNew: false
+			isNew: false,
 		};
 	},
 
@@ -234,8 +237,11 @@ module.exports = React.createClass( {
 			}
 
 			this.bindEditorEvents();
-			editor.on( 'SetTextAreaContent', ( event ) => this.setTextAreaContent( event.content ) );
-			editor.once( 'PostRender', this.toggleEditor.bind( this, { autofocus: ! this.props.isNew } ) );
+			editor.on( 'SetTextAreaContent', event => this.setTextAreaContent( event.content ) );
+			editor.once(
+				'PostRender',
+				this.toggleEditor.bind( this, { autofocus: ! this.props.isNew } )
+			);
 		}.bind( this );
 
 		this.localize();
@@ -254,34 +260,34 @@ module.exports = React.createClass( {
 				alignleft: [
 					{
 						selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li',
-						styles: { textAlign: 'left' }
+						styles: { textAlign: 'left' },
 					},
 					{
 						selector: 'img,table,dl.wp-caption',
-						classes: 'alignleft'
-					}
+						classes: 'alignleft',
+					},
 				],
 				aligncenter: [
 					{
 						selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li',
-						styles: { textAlign: 'center' }
+						styles: { textAlign: 'center' },
 					},
 					{
 						selector: 'img,table,dl.wp-caption',
-						classes: 'aligncenter'
-					}
+						classes: 'aligncenter',
+					},
 				],
 				alignright: [
 					{
 						selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li',
-						styles: { textAlign: 'right' }
+						styles: { textAlign: 'right' },
 					},
 					{
 						selector: 'img,table,dl.wp-caption',
-						classes: 'alignright'
-					}
+						classes: 'alignright',
+					},
 				],
-				strikethrough: { inline: 'del' }
+				strikethrough: { inline: 'del' },
 			},
 			relative_urls: false,
 			remove_script_host: false,
@@ -316,7 +322,8 @@ module.exports = React.createClass( {
 			autoresize_bottom_margin: viewport.isMobile() ? 10 : 50,
 
 			toolbar1: `wpcom_insert_menu,formatselect,bold,italic,bullist,numlist,link,blockquote,alignleft,aligncenter,alignright,spellchecker,wp_more,${ ltrButton }wpcom_advanced`,
-			toolbar2: 'strikethrough,underline,hr,alignjustify,forecolor,pastetext,removeformat,wp_charmap,outdent,indent,undo,redo,wp_help',
+			toolbar2:
+				'strikethrough,underline,hr,alignjustify,forecolor,pastetext,removeformat,wp_charmap,outdent,indent,undo,redo,wp_help',
 			toolbar3: '',
 			toolbar4: '',
 
@@ -325,8 +332,7 @@ module.exports = React.createClass( {
 			body_class: 'content post-type-post post-status-draft post-format-standard locale-en-us',
 			add_unload_trigger: false,
 
-			setup: setup
-
+			setup: setup,
 		} );
 
 		autosize( ReactDom.findDOMNode( this.refs.text ) );
@@ -340,11 +346,14 @@ module.exports = React.createClass( {
 	},
 
 	destroyEditor() {
-		forEach( EVENTS, function( eventHandler, eventName ) {
-			if ( this.props[ eventHandler ] ) {
-				this._editor.off( eventName, this.props[ eventHandler ] );
-			}
-		}.bind( this ) );
+		forEach(
+			EVENTS,
+			function( eventHandler, eventName ) {
+				if ( this.props[ eventHandler ] ) {
+					this._editor.off( eventName, this.props[ eventHandler ] );
+				}
+			}.bind( this )
+		);
 
 		tinymce.remove( this._editor );
 		this._editor = null;
@@ -358,15 +367,18 @@ module.exports = React.createClass( {
 	bindEditorEvents: function( prevProps ) {
 		prevProps = prevProps || {};
 
-		forEach( EVENTS, function( eventHandler, eventName ) {
-			if ( prevProps[ eventHandler ] !== this.props[ eventHandler ] ) {
-				if ( this.props[ eventHandler ] ) {
-					this._editor.on( eventName, this.props[ eventHandler ] );
-				} else {
-					this._editor.off( eventName, this.props[ eventHandler ] );
+		forEach(
+			EVENTS,
+			function( eventHandler, eventName ) {
+				if ( prevProps[ eventHandler ] !== this.props[ eventHandler ] ) {
+					if ( this.props[ eventHandler ] ) {
+						this._editor.on( eventName, this.props[ eventHandler ] );
+					} else {
+						this._editor.off( eventName, this.props[ eventHandler ] );
+					}
 				}
-			}
-		}.bind( this ) );
+			}.bind( this )
+		);
 	},
 
 	toggleEditor: function( options = { autofocus: true } ) {
@@ -378,7 +390,7 @@ module.exports = React.createClass( {
 			this._editor.hide();
 			this.doAutosizeUpdate();
 			if ( options.autofocus ) {
-				this.focusEditor( );
+				this.focusEditor();
 			}
 			return;
 		}
@@ -438,9 +450,12 @@ module.exports = React.createClass( {
 	},
 
 	setTextAreaContent: function( content ) {
-		this.setState( {
-			content: decodeEntities( content )
-		}, this.doAutosizeUpdate );
+		this.setState(
+			{
+				content: decodeEntities( content ),
+			},
+			this.doAutosizeUpdate
+		);
 	},
 
 	setEditorContent: function( content, args = {} ) {
@@ -458,7 +473,7 @@ module.exports = React.createClass( {
 
 	setSelection: function( selection ) {
 		this.setState( {
-			selection
+			selection,
 		} );
 	},
 
@@ -519,7 +534,7 @@ module.exports = React.createClass( {
 		const { mode } = this.props;
 		const className = classnames( {
 			tinymce: true,
-			'is-visible': mode === 'html'
+			'is-visible': mode === 'html',
 		} );
 
 		/*
@@ -534,12 +549,13 @@ module.exports = React.createClass( {
 
 		return (
 			<div className={ containerClassName }>
-				{ 'html' === mode && config.isEnabled( 'post-editor/html-toolbar' ) &&
+				{ 'html' === mode &&
+				config.isEnabled( 'post-editor/html-toolbar' ) && (
 					<EditorHtmlToolbar
 						content={ this.refs.text }
 						onToolbarChangeContent={ this.onToolbarChangeContent }
 					/>
-				}
+				) }
 				<textarea
 					ref="text"
 					className={ className }
@@ -550,5 +566,5 @@ module.exports = React.createClass( {
 				/>
 			</div>
 		);
-	}
+	},
 } );

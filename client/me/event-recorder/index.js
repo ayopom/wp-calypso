@@ -1,6 +1,9 @@
 /**
  * Internal dependencies
+ *
+ * @format
  */
+
 var analytics = require( 'lib/analytics' );
 
 module.exports = {
@@ -61,5 +64,5 @@ module.exports = {
 				callback( event );
 			}
 		};
-	}
+	},
 };

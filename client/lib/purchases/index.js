@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { find, includes } from 'lodash';
 
 import moment from 'moment';
@@ -9,12 +12,7 @@ import i18n from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import {
-	isJetpackPlan,
-	isDomainRegistration,
-	isPlan,
-	isTheme
-} from 'lib/products-values';
+import { isJetpackPlan, isDomainRegistration, isPlan, isTheme } from 'lib/products-values';
 
 function getIncludedDomain( purchase ) {
 	return purchase.includedDomain;
@@ -28,29 +26,31 @@ function getIncludedDomain( purchase ) {
  * @return {array} An array of sites with purchases attached.
  */
 function getPurchasesBySite( purchases, sites ) {
-	return purchases.reduce( ( result, currentValue ) => {
-		const site = find( result, { id: currentValue.siteId } );
-		if ( site ) {
-			site.purchases = site.purchases.concat( currentValue );
-		} else {
-			const siteObject = find( sites, { ID: currentValue.siteId } );
+	return purchases
+		.reduce( ( result, currentValue ) => {
+			const site = find( result, { id: currentValue.siteId } );
+			if ( site ) {
+				site.purchases = site.purchases.concat( currentValue );
+			} else {
+				const siteObject = find( sites, { ID: currentValue.siteId } );
 
-			result = result.concat( {
-				id: currentValue.siteId,
-				name: currentValue.siteName,
-				/* if the purchase is attached to a deleted site,
+				result = result.concat( {
+					id: currentValue.siteId,
+					name: currentValue.siteName,
+					/* if the purchase is attached to a deleted site,
 				 * there will be no site with this ID in `sites`, so
 				 * we fall back on the domain. */
-				slug: siteObject ? siteObject.slug : currentValue.domain,
-				isDomainOnly: siteObject ? siteObject.options.is_domain_only : false,
-				title: currentValue.siteName || currentValue.domain || '',
-				purchases: [ currentValue ],
-				domain: siteObject ? siteObject.domain : currentValue.domain
-			} );
-		}
+					slug: siteObject ? siteObject.slug : currentValue.domain,
+					isDomainOnly: siteObject ? siteObject.options.is_domain_only : false,
+					title: currentValue.siteName || currentValue.domain || '',
+					purchases: [ currentValue ],
+					domain: siteObject ? siteObject.domain : currentValue.domain,
+				} );
+			}
 
-		return result;
-	}, [] ).sort( ( a, b ) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1 );
+			return result;
+		}, [] )
+		.sort( ( a, b ) => ( a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1 ) );
 }
 
 function getName( purchase ) {
@@ -74,7 +74,11 @@ function hasIncludedDomain( purchase ) {
 }
 
 function hasPaymentMethod( purchase ) {
-	return isPaidWithPaypal( purchase ) || isPaidWithCreditCard( purchase ) || isPaidWithPayPalDirect( purchase );
+	return (
+		isPaidWithPaypal( purchase ) ||
+		isPaidWithCreditCard( purchase ) ||
+		isPaidWithPayPalDirect( purchase )
+	);
 }
 
 function hasPrivacyProtection( purchase ) {
@@ -115,12 +119,10 @@ function isExpired( purchase ) {
 }
 
 function isExpiring( purchase ) {
-	return includes( [
-		'cardExpired',
-		'cardExpiring',
-		'manualRenew',
-		'expiring'
-	], purchase.expiryStatus );
+	return includes(
+		[ 'cardExpired', 'cardExpiring', 'manualRenew', 'expiring' ],
+		purchase.expiryStatus
+	);
 }
 
 function isIncludedWithPlan( purchase ) {
@@ -192,10 +194,7 @@ function isRenewing( purchase ) {
 }
 
 function isSubscription( purchase ) {
-	const nonSubscriptionFunctions = [
-		isDomainRegistration,
-		isOneTimePurchase
-	];
+	const nonSubscriptionFunctions = [ isDomainRegistration, isOneTimePurchase ];
 
 	return ! nonSubscriptionFunctions.some( fn => fn( purchase ) );
 }
@@ -225,7 +224,11 @@ function canExplicitRenew( purchase ) {
 }
 
 function creditCardExpiresBeforeSubscription( purchase ) {
-	return isPaidWithCreditCard( purchase ) && hasCreditCardData( purchase ) && purchase.payment.creditCard.expiryMoment.diff( purchase.expiryMoment, 'months' ) < 0;
+	return (
+		isPaidWithCreditCard( purchase ) &&
+		hasCreditCardData( purchase ) &&
+		purchase.payment.creditCard.expiryMoment.diff( purchase.expiryMoment, 'months' ) < 0
+	);
 }
 
 function monthsUntilCardExpires( purchase ) {
@@ -269,10 +272,12 @@ function purchaseType( purchase ) {
 }
 
 function showCreditCardExpiringWarning( purchase ) {
-	return ! isIncludedWithPlan( purchase ) &&
+	return (
+		! isIncludedWithPlan( purchase ) &&
 		isPaidWithCreditCard( purchase ) &&
 		creditCardExpiresBeforeSubscription( purchase ) &&
-		monthsUntilCardExpires( purchase ) < 3;
+		monthsUntilCardExpires( purchase ) < 3
+	);
 }
 
 export {

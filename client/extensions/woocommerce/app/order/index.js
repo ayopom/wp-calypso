@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
@@ -26,8 +29,8 @@ class Order extends Component {
 	state = {
 		order: {
 			id: this.props.orderId,
-		}
-	}
+		},
+	};
 
 	componentDidMount() {
 		const { siteId, orderId } = this.props;
@@ -42,23 +45,27 @@ class Order extends Component {
 		if ( newProps.orderId !== this.props.orderId || newProps.siteId !== this.props.siteId ) {
 			this.props.fetchOrder( newProps.siteId, newProps.orderId );
 			this.props.fetchNotes( newProps.siteId, newProps.orderId );
-		} else if ( newProps.order && this.props.order && newProps.order.status !== this.props.order.status ) {
+		} else if (
+			newProps.order &&
+			this.props.order &&
+			newProps.order.status !== this.props.order.status
+		) {
 			// A status change should force a notes refresh
 			this.props.fetchNotes( newProps.siteId, newProps.orderId, true );
 		}
 	}
 
-	onUpdate = ( order ) => {
+	onUpdate = order => {
 		// Merge the new order updates into the existing order updates
-		this.setState( ( prevState ) => {
+		this.setState( prevState => {
 			const updatedOrder = { ...prevState.order, ...order };
 			return { order: updatedOrder };
 		} );
-	}
+	};
 
 	saveOrder = () => {
 		this.props.updateOrder( this.props.siteId, this.state.order );
-	}
+	};
 
 	render() {
 		const { className, isSaving, order, orderId, site, translate } = this.props;
@@ -67,13 +74,17 @@ class Order extends Component {
 		}
 
 		const breadcrumbs = [
-			( <a href={ getLink( '/store/orders/:site/', site ) }>{ translate( 'Orders' ) }</a> ),
-			( <span>{ translate( 'Order %(orderId)s Details', { args: { orderId: `#${ orderId }` } } ) }</span> ),
+			<a href={ getLink( '/store/orders/:site/', site ) }>{ translate( 'Orders' ) }</a>,
+			<span>
+				{ translate( 'Order %(orderId)s Details', { args: { orderId: `#${ orderId }` } } ) }
+			</span>,
 		];
 		return (
 			<Main className={ className }>
 				<ActionHeader breadcrumbs={ breadcrumbs }>
-					<Button primary onClick={ this.saveOrder } busy={ isSaving }>{ translate( 'Save Order' ) }</Button>
+					<Button primary onClick={ this.saveOrder } busy={ isSaving }>
+						{ translate( 'Save Order' ) }
+					</Button>
 				</ActionHeader>
 
 				<div className="order__container">

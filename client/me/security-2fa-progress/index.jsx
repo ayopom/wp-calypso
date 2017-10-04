@@ -1,12 +1,14 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 var React = require( 'react' ),
 	debug = require( 'debug' )( 'calypso:me:security:2fa-progress' ),
 	ProgressItem = require( './progress-item' );
 
 module.exports = React.createClass( {
-
 	displayName: 'Security2faProgress',
 
 	componentDidMount: function() {
@@ -20,19 +22,16 @@ module.exports = React.createClass( {
 	stepClass: function( step ) {
 		var currentStep = parseInt( this.props.step, 10 );
 
-		return ( {
+		return {
 			isHighlighted: step === currentStep,
-			isCompleted: step < currentStep
-		} );
+			isCompleted: step < currentStep,
+		};
 	},
 
 	render: function() {
 		return (
-
 			<div className="security-2fa-progress__container">
-
 				<div className="security-2fa-progress__inner-container">
-
 					<ProgressItem
 						label={ this.translate( 'Enter Phone Number' ) }
 						icon="phone"
@@ -50,11 +49,8 @@ module.exports = React.createClass( {
 						icon="refresh"
 						step={ this.stepClass( 3 ) }
 					/>
-
 				</div>
-
 			</div>
-
 		);
-	}
+	},
 } );

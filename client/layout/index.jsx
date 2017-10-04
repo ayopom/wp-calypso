@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { property, sortBy } from 'lodash';
 var React = require( 'react' ),
 	connect = require( 'react-redux' ).connect,
@@ -66,10 +69,7 @@ Layout = React.createClass( {
 		// connected props
 		isLoading: PropTypes.bool,
 		isSupportUser: PropTypes.bool,
-		section: PropTypes.oneOfType( [
-			PropTypes.bool,
-			PropTypes.object,
-		] ),
+		section: PropTypes.oneOfType( [ PropTypes.bool, PropTypes.object ] ),
 		isOffline: PropTypes.bool,
 		colorSchemePreference: PropTypes.string,
 	},
@@ -92,7 +92,8 @@ Layout = React.createClass( {
 			<MasterbarLoggedIn
 				user={ this.props.user }
 				section={ this.props.section.group }
-				sites={ this.props.sites } />
+				sites={ this.props.sites }
+			/>
 		);
 	},
 
@@ -105,13 +106,18 @@ Layout = React.createClass( {
 
 		const showWelcome = this.props.nuxWelcome.getWelcome();
 		const newestSite = this.newestSite();
-		const showInvitation = ! showWelcome &&
-				translatorInvitation.isPending() &&
-				translatorInvitation.isValidSection( this.props.section.name );
+		const showInvitation =
+			! showWelcome &&
+			translatorInvitation.isPending() &&
+			translatorInvitation.isValidSection( this.props.section.name );
 
 		return (
 			<span>
-				<Welcome isVisible={ showWelcome } closeAction={ this.closeWelcome } additionalClassName="NuxWelcome">
+				<Welcome
+					isVisible={ showWelcome }
+					closeAction={ this.closeWelcome }
+					additionalClassName="NuxWelcome"
+				>
 					<WelcomeMessage welcomeSite={ newestSite } />
 				</Welcome>
 				<TranslatorInvitation isVisible={ showInvitation } />
@@ -121,9 +127,7 @@ Layout = React.createClass( {
 
 	renderPreview() {
 		if ( config.isEnabled( 'preview-layout' ) && this.props.section.group === 'sites' ) {
-			return (
-				<SitePreview />
-			);
+			return <SitePreview />;
 		}
 	},
 
@@ -137,11 +141,11 @@ Layout = React.createClass( {
 				{ 'has-no-sidebar': ! this.props.hasSidebar },
 				{ 'wp-singletree-layout': !! this.props.primary },
 				{ 'has-chat': this.props.chatIsOpen },
-				`is-${ this.props.colorSchemePreference }-theme`,
+				`is-${ this.props.colorSchemePreference }-theme`
 			),
 			loadingClass = classnames( {
 				layout__loader: true,
-				'is-active': this.props.isLoading
+				'is-active': this.props.isLoading,
 			} );
 
 		return (
@@ -154,11 +158,17 @@ Layout = React.createClass( {
 				{ config.isEnabled( 'keyboard-shortcuts' ) ? <KeyboardShortcutsMenu /> : null }
 				{ this.renderMasterbar() }
 				{ config.isEnabled( 'support-user' ) && <SupportUser /> }
-				<div className={ loadingClass } ><PulsingDot active={ this.props.isLoading } chunkName={ this.props.section.name } /></div>
+				<div className={ loadingClass }>
+					<PulsingDot active={ this.props.isLoading } chunkName={ this.props.section.name } />
+				</div>
 				{ this.props.isOffline && <OfflineStatus /> }
 				<div id="content" className="layout__content">
 					{ this.renderWelcome() }
-					<GlobalNotices id="notices" notices={ notices.list } forcePinned={ 'post' === this.props.section.name } />
+					<GlobalNotices
+						id="notices"
+						notices={ notices.list }
+						forcePinned={ 'post' === this.props.section.name }
+					/>
 					<div id="primary" className="layout__primary">
 						{ this.props.primary }
 					</div>
@@ -168,28 +178,30 @@ Layout = React.createClass( {
 				</div>
 				<TranslatorLauncher
 					isEnabled={ translator.isEnabled() }
-					isActive={ translator.isActivated() } />
+					isActive={ translator.isActivated() }
+				/>
 				{ this.renderPreview() }
-				{ config.isEnabled( 'happychat' ) && this.props.chatIsOpen && <AsyncLoad require="components/happychat" /> }
-				{ 'development' === process.env.NODE_ENV && <AsyncLoad require="components/webpack-build-monitor" /> }
+				{ config.isEnabled( 'happychat' ) &&
+				this.props.chatIsOpen && <AsyncLoad require="components/happychat" /> }
+				{ 'development' === process.env.NODE_ENV && (
+					<AsyncLoad require="components/webpack-build-monitor" />
+				) }
 				<AppBanner />
 			</div>
 		);
-	}
+	},
 } );
 
-export default connect(
-	( state ) => {
-		const { isLoading, section } = state.ui;
-		return {
-			isLoading,
-			isSupportUser: state.support.isSupportUser,
-			section,
-			hasSidebar: hasSidebar( state ),
-			isOffline: isOffline( state ),
-			currentLayoutFocus: getCurrentLayoutFocus( state ),
-			chatIsOpen: isHappychatOpen( state ),
-			colorSchemePreference: getPreference( state, 'colorScheme' ),
-		};
-	}
-)( Layout );
+export default connect( state => {
+	const { isLoading, section } = state.ui;
+	return {
+		isLoading,
+		isSupportUser: state.support.isSupportUser,
+		section,
+		hasSidebar: hasSidebar( state ),
+		isOffline: isOffline( state ),
+		currentLayoutFocus: getCurrentLayoutFocus( state ),
+		chatIsOpen: isHappychatOpen( state ),
+		colorSchemePreference: getPreference( state, 'colorScheme' ),
+	};
+} )( Layout );

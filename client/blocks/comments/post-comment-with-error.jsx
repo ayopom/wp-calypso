@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -53,6 +56,5 @@ PostCommentWithError.propTypes = {
 	repliesList: PropTypes.object.isRequired,
 	commentsTree: PropTypes.object.isRequired,
 	onUpdateCommentText: PropTypes.func.isRequired,
-	commentId: PropTypes.oneOfType( [ PropTypes.string, PropTypes.number ] )
-		.isRequired,
+	commentId: PropTypes.oneOfType( [ PropTypes.string, PropTypes.number ] ).isRequired,
 };

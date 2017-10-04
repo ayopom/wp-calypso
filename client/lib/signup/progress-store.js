@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import { assign, clone, find, get, isEmpty, map, omit } from 'lodash';
 const debug = require( 'debug' )( 'calypso:signup-progress-store' );
 const store = require( 'store' );
@@ -30,7 +33,7 @@ var SignupProgressStore = {
 	reset: function() {
 		signupProgress = [];
 		store.remove( STORAGE_KEY );
-	}
+	},
 };
 
 emitter( SignupProgressStore );
@@ -72,10 +75,12 @@ function updateOrAddStep( step ) {
 }
 
 function setStepInvalid( step, errors ) {
-	updateOrAddStep( assign( {}, step, {
-		status: 'invalid',
-		errors: errors
-	} ) );
+	updateOrAddStep(
+		assign( {}, step, {
+			status: 'invalid',
+			errors: errors,
+		} )
+	);
 }
 
 function saveStep( step ) {
@@ -87,7 +92,8 @@ function saveStep( step ) {
 }
 
 function submitStep( step ) {
-	const stepHasApiRequestFunction = steps[ step.stepName ] && steps[ step.stepName ].apiRequestFunction,
+	const stepHasApiRequestFunction =
+			steps[ step.stepName ] && steps[ step.stepName ].apiRequestFunction,
 		status = stepHasApiRequestFunction ? 'pending' : 'completed';
 
 	updateOrAddStep( assign( {}, step, { status } ) );

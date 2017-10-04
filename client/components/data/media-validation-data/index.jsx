@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 const PropTypes = require( 'prop-types' );
 const React = require( 'react' );
 
@@ -12,7 +15,7 @@ const MediaValidationStore = require( 'lib/media/validation-store' ),
 
 function getStateData( siteId ) {
 	return {
-		mediaValidationErrors: MediaValidationStore.getAllErrors( siteId )
+		mediaValidationErrors: MediaValidationStore.getAllErrors( siteId ),
 	};
 }
 
@@ -20,7 +23,7 @@ module.exports = React.createClass( {
 	displayName: 'MediaValidationData',
 
 	propTypes: {
-		siteId: PropTypes.number.isRequired
+		siteId: PropTypes.number.isRequired,
 	},
 
 	getInitialState: function() {
@@ -47,5 +50,5 @@ module.exports = React.createClass( {
 
 	render: function() {
 		return passToChildren( this, this.state );
-	}
+	},
 } );

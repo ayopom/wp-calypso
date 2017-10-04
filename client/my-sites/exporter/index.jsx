@@ -1,6 +1,9 @@
 /**
  * External dependencies
+ *
+ * @format
  */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -19,10 +22,7 @@ import InProgressCard from './guided-transfer-card/in-progress';
 
 class Exporter extends Component {
 	render() {
-		const {
-			siteId,
-			isTransferInProgress,
-		} = this.props;
+		const { siteId, isTransferInProgress } = this.props;
 		const showGuidedTransferOptions = config.isEnabled( 'manage/export/guided-transfer' );
 
 		return (
@@ -30,11 +30,9 @@ class Exporter extends Component {
 				{ showGuidedTransferOptions && <QuerySiteGuidedTransfer siteId={ siteId } /> }
 
 				<Notices />
-				{ showGuidedTransferOptions && isTransferInProgress &&
-					<InProgressCard /> }
+				{ showGuidedTransferOptions && isTransferInProgress && <InProgressCard /> }
 				<ExportCard siteId={ siteId } />
-				{ showGuidedTransferOptions && ! isTransferInProgress &&
-					<GuidedTransferCard /> }
+				{ showGuidedTransferOptions && ! isTransferInProgress && <GuidedTransferCard /> }
 			</div>
 		);
 	}
