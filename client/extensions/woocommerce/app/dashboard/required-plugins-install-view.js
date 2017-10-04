@@ -1,3 +1,4 @@
+/** @format */
 /**
  * External dependencies
  */
@@ -32,7 +33,7 @@ class RequiredPluginsInstallView extends Component {
 	static propTypes = {
 		site: PropTypes.shape( {
 			ID: PropTypes.number.isRequired,
-		} )
+		} ),
 	};
 
 	constructor( props ) {
@@ -50,13 +51,13 @@ class RequiredPluginsInstallView extends Component {
 
 	componentDidMount = () => {
 		this.createUpdateTimer();
-	}
+	};
 
 	componentWillUnmount = () => {
 		this.destroyUpdateTimer();
-	}
+	};
 
-	componentWillReceiveProps = ( nextProps ) => {
+	componentWillReceiveProps = nextProps => {
 		if ( nextProps.atomicStoreDoingTransfer && ! this.state.requestedTransferStatus ) {
 			this.props.fetchAutomatedTransferStatus( this.props.siteId );
 
@@ -78,14 +79,14 @@ class RequiredPluginsInstallView extends Component {
 		this.updateTimer = window.setInterval( () => {
 			this.updateEngine();
 		}, 17 );
-	}
+	};
 
 	destroyUpdateTimer = () => {
 		if ( this.updateTimer ) {
 			window.clearInterval( this.updateTimer );
 			this.updateTimer = false;
 		}
-	}
+	};
 
 	getRequiredPluginsList = () => {
 		const { translate } = this.props;
@@ -94,9 +95,11 @@ class RequiredPluginsInstallView extends Component {
 			woocommerce: translate( 'WooCommerce' ),
 			'woocommerce-gateway-stripe': translate( 'WooCommerce Stripe Gateway' ),
 			'woocommerce-services': translate( 'WooCommerce Services' ),
-			'taxjar-simplified-taxes-for-woocommerce': translate( 'TaxJar - Sales Tax Automation for WooCommerce' ),
+			'taxjar-simplified-taxes-for-woocommerce': translate(
+				'TaxJar - Sales Tax Automation for WooCommerce'
+			),
 		};
-	}
+	};
 
 	doTransferStatusPolling = () => {
 		const { automatedTransferStatus } = this.props;
@@ -208,7 +211,7 @@ class RequiredPluginsInstallView extends Component {
 		this.setState( {
 			engineState: 'DONESUCCESS',
 		} );
-	}
+	};
 
 	doInstallation = () => {
 		const { site, sitePlugins, wporg } = this.props;
@@ -243,7 +246,7 @@ class RequiredPluginsInstallView extends Component {
 				stepIndex: this.state.stepIndex + 1,
 			} );
 		}
-	}
+	};
 
 	doActivation = () => {
 		const { site, sitePlugins } = this.props;
@@ -293,7 +296,7 @@ class RequiredPluginsInstallView extends Component {
 				stepIndex: this.state.stepIndex + 1,
 			} );
 		}
-	}
+	};
 
 	doneSuccess = () => {
 		const { site } = this.props;
@@ -302,7 +305,7 @@ class RequiredPluginsInstallView extends Component {
 		this.setState( {
 			engineState: 'IDLE',
 		} );
-	}
+	};
 
 	updateEngine = () => {
 		switch ( this.state.engineState ) {
@@ -322,7 +325,7 @@ class RequiredPluginsInstallView extends Component {
 				this.doneSuccess();
 				break;
 		}
-	}
+	};
 
 	getProgress = () => {
 		const { engineState, stepIndex, numTotalSteps } = this.state;
@@ -333,7 +336,7 @@ class RequiredPluginsInstallView extends Component {
 		}
 
 		return ( stepIndex + 1 ) / ( numTotalSteps + 1 ) * 100;
-	}
+	};
 
 	startSetup = () => {
 		const { atomicStoreDoingTransfer } = this.props;
@@ -349,7 +352,7 @@ class RequiredPluginsInstallView extends Component {
 		}
 
 		this.setState( {
-			engineState
+			engineState,
 		} );
 	};
 
@@ -362,11 +365,11 @@ class RequiredPluginsInstallView extends Component {
 					imageWidth={ 160 }
 					title={ translate( 'Have something to sell?' ) }
 					subtitle={ translate(
-						'If you\'re in the {{strong}}United States{{/strong}} ' +
-						'or {{strong}}Canada{{/strong}}, you can sell your products right on ' +
-						'your site and ship them to customers in a snap!',
+						"If you're in the {{strong}}United States{{/strong}} " +
+							'or {{strong}}Canada{{/strong}}, you can sell your products right on ' +
+							'your site and ship them to customers in a snap!',
 						{
-							components: { strong: <strong /> }
+							components: { strong: <strong /> },
 						}
 					) }
 				>
@@ -376,7 +379,7 @@ class RequiredPluginsInstallView extends Component {
 				</SetupHeader>
 			</div>
 		);
-	}
+	};
 
 	render = () => {
 		const { site, translate } = this.props;
@@ -396,13 +399,13 @@ class RequiredPluginsInstallView extends Component {
 					imageSource={ '/calypso/images/extensions/woocommerce/woocommerce-store-creation.svg' }
 					imageWidth={ 160 }
 					title={ translate( 'Setting up your store' ) }
-					subtitle={ translate( 'Give us a minute and we\'ll move right along.' ) }
+					subtitle={ translate( "Give us a minute and we'll move right along." ) }
 				>
 					<ProgressBar value={ progress } isPulsing />
 				</SetupHeader>
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
@@ -437,4 +440,6 @@ function mapDispatchToProps( dispatch ) {
 	);
 }
 
-export default connect( mapStateToProps, mapDispatchToProps )( localize( RequiredPluginsInstallView ) );
+export default connect( mapStateToProps, mapDispatchToProps )(
+	localize( RequiredPluginsInstallView )
+);
